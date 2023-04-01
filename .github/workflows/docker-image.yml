@@ -10,6 +10,7 @@ env:
   # Use docker.io for Docker Hub if empty
   REGISTRY: ghcr.io
   IMAGE_NAME: kennedyoliveira/jsoncrack
+  PLATFORMS: linux/amd64,linux/arm64,linux/arm/v7
 
 jobs:
   build:
@@ -30,7 +31,7 @@ jobs:
       - name: Setup Docker buildx
         uses: docker/setup-buildx-action@79abd3f86f79a9d68a23c75a09a9a85889262adf
         with:
-          platforms: linux/amd64,linux/arm64,linux/arm/v7
+          platforms: ${{ PLATFORMS }}
 
       # Login against a Docker registry except on PR
       # https://github.com/docker/login-action
@@ -62,4 +63,4 @@ jobs:
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
-          platforms: linux/amd64,linux/386,linux/arm64,linux/arm/v7
+          platforms: ${{ PLATFORMS }}
